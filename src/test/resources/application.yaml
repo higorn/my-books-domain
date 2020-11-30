@@ -1,0 +1,17 @@
+security:
+  oauth2:
+    client:
+      client-id: nicanor
+      client-secret: 1234
+      access-token-uri: http://localhost:8081/oauth/token
+      grant-type: client_credentials
+
+logging:
+  level:
+   liquibase: INFO
+
+books:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: http://localhost:8081
