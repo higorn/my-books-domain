@@ -1,6 +1,9 @@
-package higor.mybooks.domain.book;
+package higor.mybooks.domain;
 
 import feign.RequestInterceptor;
+import higor.mybooks.domain.book.Book;
+import higor.mybooks.domain.userbook.UserBook;
+import higor.mybooks.domain.userbook.UserBookClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -16,16 +19,21 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @EnableFeignClients
-public class BooksRestRepoIT {
+public class UserBooksRestRepoIT {
 
   @SpringBootConfiguration
   @EnableAutoConfiguration
@@ -40,26 +48,29 @@ public class BooksRestRepoIT {
   }
 
   @Autowired
-  private BookClient     bookClient;
+  private UserBookClient userBookClient;
 
   @Test
-  void shouldGetBooks() {
-    PagedModel<EntityModel<Book>> books = bookClient.findByTerm("a", PageRequest.of(0, 10, Sort.Direction.ASC, "title"));
-    assertFalse(books.getContent().isEmpty());
+  void shouldGetUserBooks() {
+    PagedModel<EntityModel<UserBook>> pagedUserBooks = userBookClient
+        .findByUserId(3, PageRequest.of(0, 10, Sort.Direction.ASC, "email"));
+    assertNotNull(pagedUserBooks);
 
-    EntityModel<Book> book = bookClient.findById(1);
-    assertNotNull(book);
+    List<UserBook> userBooks = pagedUserBooks.getContent().stream().map(e -> {
+      int id = getIdFromLink(e.getLink("self"));
+      return new UserBook().id(id).book(getBook(id));
+    }).collect(Collectors.toList());
+    assertFalse(userBooks.isEmpty());
   }
 
-  @Test
-  void shouldCreateANewBook() {
-    EntityModel<Book> book = bookClient.save(new Book()
-        .title("My book2")
-        .subtitle("A new book")
-        .author("Higor")
-        .publishingCompaty("My self")
-        .pages(50));
-    assertNotNull(book);
+  private Book getBook(int id) {
+    EntityModel<Book> book = userBookClient.getBookByUserId(id);
+    return book.getContent().id(getIdFromLink(book.getLink("self")));
+  }
+
+  private int getIdFromLink(Optional<Link> self2) {
+    String self = self2.get().getHref();
+    return Integer.parseInt(self.substring(self.lastIndexOf("/") + 1));
   }
 
 }

@@ -1,9 +1,11 @@
 package higor.mybooks.domain.book;
 
+import higor.mybooks.domain.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
-public class Book {
+public class Book implements BaseEntity<Book, Integer> {
   @Id
   @SequenceGenerator(name = "Book_SEQ", sequenceName = "book_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Book_SEQ")
@@ -14,15 +16,18 @@ public class Book {
   private String       publishingCompany;
   private Integer      pages;
 
+  @Override
   public Integer getId() {
     return id;
   }
 
+  @Override
   public void setId(Integer id) {
     this.id = id;
   }
 
-  public Book id(int id) {
+  @Override
+  public Book id(Integer id) {
     this.id = id;
     return this;
   }

@@ -1,5 +1,6 @@
 package higor.mybooks.domain.userbook;
 
+import higor.mybooks.domain.BaseEntity;
 import higor.mybooks.domain.book.Book;
 import higor.mybooks.domain.user.User;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "account_book")
-public class UserBook {
+public class UserBook implements BaseEntity<UserBook, Integer> {
   @Id
   @SequenceGenerator(name = "UserBook_SEQ", sequenceName = "account_book_seq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserBook_SEQ")
@@ -21,10 +22,12 @@ public class UserBook {
   @Column(name = "is_read")
   private boolean read;
 
+  @Override
   public Integer getId() {
     return id;
   }
 
+  @Override
   public void setId(Integer id) {
     this.id = id;
   }
@@ -53,6 +56,7 @@ public class UserBook {
     this.read = read;
   }
 
+  @Override
   public UserBook id(Integer id) {
     this.id = id;
     return this;

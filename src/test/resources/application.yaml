@@ -15,3 +15,8 @@ books:
     eureka:
       enabled: false
     listOfServers: http://localhost:8081
+user-books:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: http://localhost:8081
