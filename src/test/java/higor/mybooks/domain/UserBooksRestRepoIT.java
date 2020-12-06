@@ -56,10 +56,12 @@ public class UserBooksRestRepoIT {
         .findByUserId(3, PageRequest.of(0, 10, Sort.Direction.ASC, "email"));
     assertNotNull(pagedUserBooks);
 
-    List<UserBook> userBooks = pagedUserBooks.getContent().stream().map(e -> {
-      int id = getIdFromLink(e.getLink("self"));
-      return new UserBook().id(id).book(getBook(id));
-    }).collect(Collectors.toList());
+    List<UserBook> userBooks = pagedUserBooks.getContent().stream()
+        .map(e -> {
+          int id = getIdFromLink(e.getLink("self"));
+          return e.getContent().id(id);
+//          return new UserBook().id(id).book(getBook(id));
+        }).collect(Collectors.toList());
     assertFalse(userBooks.isEmpty());
   }
 

@@ -44,4 +44,24 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  public User id(Integer id) {
+    this.id = id;
+    return this;
+  }
+
+  public User name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public User surname(String surname) {
+    this.surname = surname;
+    return this;
+  }
+
+  public User email(String email) {
+    this.email = email;
+    return this;
+  }
 }

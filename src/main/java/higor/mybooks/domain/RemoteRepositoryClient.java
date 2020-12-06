@@ -14,5 +14,5 @@ public interface RemoteRepositoryClient<T> {
   @GetMapping(path = "/{id}")
   EntityModel<T> findById(@PathVariable("id") int id);
   @PostMapping(path = "/")
-  EntityModel<T> save(@RequestBody T entity);
+  EntityModel<T> create(@RequestBody T entity);
 }

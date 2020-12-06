@@ -8,5 +8,6 @@ public interface BookRepository {
       String title, String subtitle, String author, String publishingCompany, Pageable pageable);
   Page<Book> findByTerm(String term, Pageable pageable);
 
-  public <S extends Book> S save(S entity);
+  <S extends Book> S save(S entity);
+  void updateBookUser(Integer bookId, Integer userId);
 }
