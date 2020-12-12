@@ -4,7 +4,6 @@ import feign.RequestInterceptor;
 import higor.mybooks.domain.book.Book;
 import higor.mybooks.domain.userbook.UserBook;
 import higor.mybooks.domain.userbook.UserBookClient;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
@@ -50,7 +49,7 @@ public class UserBooksRestRepoIT {
   @Autowired
   private UserBookClient userBookClient;
 
-  @Test
+//  @Test
   void shouldGetUserBooks() {
     PagedModel<EntityModel<UserBook>> pagedUserBooks = userBookClient
         .findByUserId(3, PageRequest.of(0, 10, Sort.Direction.ASC, "email"));

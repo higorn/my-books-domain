@@ -21,6 +21,8 @@ public interface BookClient extends RemoteRepositoryClient<Book> {
   @GetMapping(path = "/{id}/users")
   PagedModel<EntityModel<User>> findBookUsers(@PathVariable("id") int id);
 
+  // This is been kept just for reference, but shouldn't be used
+  @Deprecated
   @GetMapping(path = "/{id}/users", consumes = "text/uri-list")
   ResponseEntity<Void> updateBookUsers(@PathVariable("id") int id, @RequestBody String userUris);
 }

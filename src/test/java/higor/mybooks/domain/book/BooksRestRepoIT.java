@@ -2,7 +2,6 @@ package higor.mybooks.domain.book;
 
 import feign.RequestInterceptor;
 import higor.mybooks.domain.user.User;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
@@ -44,7 +43,7 @@ public class BooksRestRepoIT {
   @Autowired
   private BookClient     bookClient;
 
-  @Test
+//  @Test
   void shouldGetBooks() {
     PagedModel<EntityModel<Book>> books = bookClient.findByTerm("a", PageRequest.of(0, 10, Sort.Direction.ASC, "title"));
     assertFalse(books.getContent().isEmpty());
@@ -53,7 +52,7 @@ public class BooksRestRepoIT {
     assertNotNull(book);
   }
 
-  @Test
+//  @Test
   void shouldCreateANewBook() {
     EntityModel<Book> book = bookClient.create(new Book()
         .title("My book30")

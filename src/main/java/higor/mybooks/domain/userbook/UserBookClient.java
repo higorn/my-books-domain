@@ -14,6 +14,4 @@ public interface UserBookClient extends RemoteRepositoryClient<UserBook> {
   PagedModel<EntityModel<UserBook>> findByUserId(@RequestParam("userId") Integer userId, Pageable page);
   @GetMapping(path = "/{id}/book")
   EntityModel<Book> getBookByUserId(@PathVariable("id") int id);
-  @PostMapping(path = "/")
-  EntityModel<UserBookSv> save(@RequestBody UserBookSv entity);
 }

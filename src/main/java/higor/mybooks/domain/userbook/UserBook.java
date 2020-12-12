@@ -1,13 +1,11 @@
 package higor.mybooks.domain.userbook;
 
 import higor.mybooks.domain.BaseEntity;
-import higor.mybooks.domain.book.Book;
-import higor.mybooks.domain.user.User;
 
 public class UserBook implements BaseEntity<UserBook, Integer> {
   private Integer id;
-  private User    user;
-  private Book    book;
+  public String user;
+  public String book;
   private boolean read;
 
   @Override
@@ -20,19 +18,19 @@ public class UserBook implements BaseEntity<UserBook, Integer> {
     this.id = id;
   }
 
-  public User getUser() {
+  public String getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  public void setUser(String user) {
     this.user = user;
   }
 
-  public Book getBook() {
+  public String getBook() {
     return book;
   }
 
-  public void setBook(Book book) {
+  public void setBook(String book) {
     this.book = book;
   }
 
@@ -50,12 +48,12 @@ public class UserBook implements BaseEntity<UserBook, Integer> {
     return this;
   }
 
-  public UserBook user(User user) {
+  public UserBook user(String user) {
     this.user = user;
     return this;
   }
 
-  public UserBook book(Book book) {
+  public UserBook book(String book) {
     this.book = book;
     return this;
   }
